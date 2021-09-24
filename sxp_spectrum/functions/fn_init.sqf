@@ -16,6 +16,13 @@
 // Does not need to run on dedicated servers or headless clients
 if (!hasInterface) exitWith {};
 
+/*
+	Frequency ranges:
+	- Experimental Antenna (390-500Mhz)
+	- Jammer Antenna (433Mhz)
+	- Military Antenna (78-89Mhz)
+*/
+
 // ESD frequency range
 missionNamespace setVariable ["#EM_FMin", 78];
 missionNamespace setVariable ["#EM_FMax", 89];
