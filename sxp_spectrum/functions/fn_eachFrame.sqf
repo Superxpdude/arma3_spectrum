@@ -11,6 +11,24 @@
 		Nothing
 */
 
+/*
+	Signal strength calculation:
+	
+	The displayed signal strength of a given signal is calculated using some "effective strength" values.
+	- "Direction Str": 
+			A value from 0.2 to 1 based on the direction from the player to the signal source.
+			Maximum strength (1) is at less than 5 degrees from the source.
+			Minimum strength (0.2) is at more than 60 degrees from the source.
+			
+	- "Distance Str":
+			A value from 0 to 1 based on the distance from the player to the signal source.
+			Maximum strength (1) is at a distance of 0 meters from the source.
+			Minimum strength (0) is at the maximum signal distance from the source.
+
+	These two values are multiplied together with the "max signal strength", and the final value is reduced by the "strength modifier".
+	These are needed to ensure that the signal strength falls within the spectrum device's max and minimum signal strengths.
+*/
+
 // This only needs to run if the player has a spectrum device in hand
 if ("hgun_esd_" in (currentWeapon player)) then {
 	// Define some basic variables
@@ -21,8 +39,6 @@ if ("hgun_esd_" in (currentWeapon player)) then {
 	
 	// Variables for the spectrum device itself
 	private _emSignals = [];
-	private _em_selMin = missionNamespace getVariable ["#EM_SelMin", 0];
-	private _em_selMax = missionNamespace getVariable ["#EM_SelMax", 0];
 	
 	// Iterate through each signal source
 	{
