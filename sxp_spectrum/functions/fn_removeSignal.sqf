@@ -25,7 +25,7 @@ if (isNil "SXP_esd_sources") then {
 };
 
 // Check if the object already exists in the array.
-private _index = SXP_esd_sources findIf {_x select 0 == _obj}
+private _index = SXP_esd_sources findIf {_x select 0 == _obj};
 
 // If the object already exists, remove the entry
 if (_index >= 0) then {

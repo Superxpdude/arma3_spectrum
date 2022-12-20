@@ -19,3 +19,8 @@ if (isNil "SXP_esd_sources") then {
 	SXP_esd_sources = [];
 	publicVariable "SXP_esd_sources";
 };
+
+if (isNil "SXP_esd_targets") then {
+	SXP_esd_targets = [];
+	publicVariable "SXP_esd_targets";
+};

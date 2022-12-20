@@ -50,13 +50,7 @@ if ("hgun_esd_" in (currentWeapon player)) then {
 		private _dist = player distance _obj;
 		// Only continue if the player is within signal distance
 		if (_dist <= _str) then {
-			// Calculate the direction loss for the signal
-			_relDir = player getRelDir _obj;
-			_effectiveStrDir = (linearConversion [_maxDirDiff,_minDirDiff,_relDir,0.2,1,true]) max (linearConversion [360 - _maxDirDiff,360 - _minDirDiff,_relDir,0.2,1,true]); // Strength modifier for direction
-			// Calculate the distance loss for the signal
-			_effectiveStrDist = linearConversion [_str,0,_dist,0,1,true]; // Strength modifier for distance
-			// Calculate our final signal strength
-			_effectiveStr = ((_maxSignalStr * _effectiveStrDist) * _effectiveStrDir) + _signalStrMod;
+			_effectiveStr = (_maxSignalStr * ([_obj, _str] call SXP_esd_fnc_calculateSignalStrength)) + _signalStrMod;
 			// Append the signal to our signals array
 			_emSignals append [_freq, _effectiveStr];
 		};	

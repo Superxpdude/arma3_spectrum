@@ -41,5 +41,20 @@ missionNamespace setVariable ["#EM_Transmit", false];
 
 [] spawn {
 	waitUntil {!isNil "SXP_esd_sources"};
-	addMissionEventHandler ["EachFrame", SXP_esd_fnc_eachFrame];
+	sxp_esd_ehHandler = [SXP_esd_fnc_eachFrame, 0.1] call CBA_fnc_addPerFrameHandler;
 };
+
+missionNamespace setVariable ["SXP_esd_transmitStartTime", -1];
+
+["XP Spectrum Device","sxp_esd_key_transmit", "Transmit", {
+	if (!isNull (findDisplay 602) || !isNull (findDisplay 24) || !isNull (findDisplay 160) || visibleMap) exitWith {};
+	missionNamespace setVariable ["#EM_Transmit", true];
+	private _transmitHandle = [SXP_esd_fnc_transmitEachFrame, 0.1] call CBA_fnc_addPerFrameHandler;
+}, {
+	missionNamespace setVariable ["#EM_Transmit", false];
+}, [0xF0, [false, false, false]]] call CBA_fnc_addKeybind;
+
+// Set local parameters for transmit handling
+localNamespace setVariable ["sxp_esd_transmit_target", nil];
+localNamespace setVariable ["sxp_esd_transmit_active", false];
+localNamespace setVariable ["sxp_esd_transmit_startTime", nil];
